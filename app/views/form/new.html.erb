@@ -1,52 +1,55 @@
-
+<head>
+    <title>Register Form</title>
+    <%= stylesheet_link_tag "form", "data-turbo-track": "reload" %>
+</head>
 <body>
-  <div class="form-container">
+    <div class="form-container">
     <h1>Register Form</h1>
     <%= form_with(model: @form, url: form_path ) do |f| %>
-      <div class="form-row">
+    <div class="form-row">
         <div class="form-group">
-          <%= f.label :firstname, "First Name" %>
-          <%= f.text_field :firstname, required: true %>
+            <%= f.label :firstname, "First Name" %>
+            <%= f.text_field :firstname, required: true %>
         </div>
 
         <div class="form-group">
-          <%= f.label :lastname, "Last Name" %>
-          <%= f.text_field :lastname, required: true %>
+            <%= f.label :lastname, "Last Name" %>
+            <%= f.text_field :lastname, required: true %>
         </div>
-      </div>
+    </div>
 
-      <div class="form-row">
+    <div class="form-row">
         <div class="form-group">
-          <%= f.label :birthdate %>
-          <%= f.date_field :birthdate, required: true %>
+            <%= f.label :birthdate %>
+            <%= f.date_field :birthdate, required: true %>
         </div>
 
         <div class="form-group">
-          <%= f.label :gender %>
-          <div class="radio-group">
-            <%= f.radio_button :gender, "male", checked: true %> Male
-            <%= f.radio_button :gender, "female" %> Female
-          </div>
+            <%= f.label :gender %>
+            <div class="radio-group">
+                <%= f.radio_button :gender, "male", checked: true %> Male
+                <%= f.radio_button :gender, "female" %> Female
+            </div>
         </div>
-      </div>
+    </div>
 
-      <div class="form-row">
+    <div class="form-row">
         <div class="form-group">
-          <%= f.label :email %>
-          <%= f.email_field :email, required: true %>
+            <%= f.label :email %>
+            <%= f.email_field :email, required: true %>
         </div>
         <div class="form-group">
-          <%= f.label :phone, "Phone Number" %>
-          <%= f.telephone_field :phone, required: true %>
+            <%= f.label :phone, "Phone Number" %>
+            <%= f.telephone_field :phone, required: true %>
         </div>
-      </div>
+    </div>
 
-      <div class="form-group">
+    <div class="form-group">
         <%= f.label :subject %>
         <%= f.select :subject, options_for_select([["Choose option", ""], "HTML", "CSS", "JavaScript"]) %>
-      </div>
+    </div>
 
-      <%= f.submit "Submit", class: "submit-btn" %>
+    <%= f.submit "Submit", class: "submit-btn" %>
     <% end %>
-  </div>
+</div>
 
