@@ -1,0 +1,36 @@
+<div class="form-container">
+<h1>All User</h1>
+
+<table>
+    <head>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>subject</th>
+        <th>delete</th>
+    </head>
+
+    <tbody>
+    <% @forms.each do |form| %>
+        <div>
+            <td><%= form.firstname %></td>
+            <td><%= form.lastname %></td>
+            <td><%= form.email %></td>
+            <td><%= form.phonenumber %></td>
+            <td><%= form.subject %></td>
+            <td>
+            <%= button_to 'ลบ', form_path(form), data: {method: :delete}%>
+            </td>
+            <td>
+            <%# <%= link_to 'แก้ไข', edit_form_path(form), class: 'edit-button' %> 
+            </td>
+        </div>
+        </tr>
+    <% end %>
+    </tbody>
+    </table>
+    <div class="button-allList">
+    <%= link_to 'กลับหน้าลงทะเบียน', form_path(), class: 'new-form' %>
+    </div>
+</div>

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get "form/new" ,to: "form#new"
+  get "form/index" ,to: "form#index"
   post "form" ,to: "form#create"
-  root "form#new"
+  delete "form" ,to: "form#destroy[:id]"
+  root "form#index"
   # resources :form , only: [:new, :create]
 end
