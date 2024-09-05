@@ -11,7 +11,7 @@ class FormController < ApplicationController
     end
   end
   def destroy
-    @form = Form.find(uesr[:id])
+    @form = Form.find(params[:id])
     @form.destroy
     redirect_to root_path
   end

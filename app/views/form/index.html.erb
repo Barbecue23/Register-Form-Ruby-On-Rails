@@ -20,7 +20,7 @@
             <td><%= form.phonenumber %></td>
             <td><%= form.subject %></td>
             <td>
-            <%= button_to 'ลบ', form_path(form), data: {method: :delete}%>
+            <%= button_to 'ลบ', form_path(form), method: :delete, data: { confirm: 'Are you sure?' }, class: 'delete-button'%>
             </td>
             <td>
             <%# <%= link_to 'แก้ไข', edit_form_path(form), class: 'edit-button' %> 
@@ -31,6 +31,6 @@
     </tbody>
     </table>
     <div class="button-allList">
-    <%= link_to 'กลับหน้าลงทะเบียน', form_path(), class: 'new-form' %>
+    <%= link_to 'กลับหน้าลงทะเบียน', "form/new" %>
     </div>
 </div>
