@@ -49,7 +49,10 @@
         <%= f.select :subject, options_for_select([["Choose option", ""], "HTML", "CSS", "JavaScript"]) %>
     </div>
 
+    <div class="link_to">
     <%= f.submit "Submit", class: "submit-btn" %>
+    <%= link_to "Back to All User", root_path ,class: "all_user"%>
+    </div>
     <% end %>
 </div>
 

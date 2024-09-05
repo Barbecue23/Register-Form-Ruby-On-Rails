@@ -5,6 +5,7 @@
     <head>
         <th>FirstName</th>
         <th>LastName</th>
+        <th>Gender</th>
         <th>Email</th>
         <th>Phone</th>
         <th>subject</th>
@@ -16,21 +17,19 @@
         <div>
             <td><%= form.firstname %></td>
             <td><%= form.lastname %></td>
+            <td><%= form.gender %></td>
             <td><%= form.email %></td>
             <td><%= form.phonenumber %></td>
             <td><%= form.subject %></td>
             <td>
-            <%= button_to 'ลบ', form_path(form), method: :delete, data: { confirm: 'Are you sure?' }, class: 'delete-button'%>
-            </td>
-            <td>
-            <%# <%= link_to 'แก้ไข', edit_form_path(form), class: 'edit-button' %> 
+            <%= button_to 'ลบ', "form/#{form.id}", method: :delete%>
             </td>
         </div>
         </tr>
     <% end %>
     </tbody>
     </table>
-    <div class="button-allList">
+    <div class="botton_allList">
     <%= link_to 'กลับหน้าลงทะเบียน', "form/new" %>
     </div>
 </div>
