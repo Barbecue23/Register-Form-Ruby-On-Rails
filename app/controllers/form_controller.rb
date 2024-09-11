@@ -12,14 +12,25 @@ class FormController < ApplicationController
   end
   def destroy
     @form = Form.find(params[:id])
-    @form.destroy
-    respond_to do |format|
-      format.html { redirect_to users_path, notice: 'User was successfully deleted.' }
-      format.turbo_stream
+    if @form.destroy
+      redirect_to form_index_path
+    else
+      redirect_to form_index_path, alert: "Something went wrong"
+    end
+    def confirm_destroy
+      @form = Form.find(params[:id])
+      redirect_to confirm_destroy_form_path
     end
   end
   def index
+    @column = params[:sort_by]
+    @direction = params[:direction]
+
     @forms = Form.all
+
+    if @column.present?
+      @forms = @forms.order("#{@column} #{@direction}")
+    end
   end
   private
   def form_params
