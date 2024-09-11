@@ -7,13 +7,16 @@ class FormController < ApplicationController
     if @form.save
       redirect_to root_path
     else
-      render :new
+      render :new , status: :unprocessable_entity
     end
   end
   def destroy
     @form = Form.find(params[:id])
     @form.destroy
-    redirect_to root_path
+    respond_to do |format|
+      format.html { redirect_to users_path, notice: 'User was successfully deleted.' }
+      format.turbo_stream
+    end
   end
   def index
     @forms = Form.all

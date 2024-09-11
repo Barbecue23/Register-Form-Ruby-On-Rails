@@ -4,5 +4,6 @@ Rails.application.routes.draw do
   post "form" ,to: "form#create"
   delete "form/:id" ,to: "form#destroy"
   root "form#index"
+  resources :forms, only: [:index, :new, :create, :destroy]
   # resources :form , only: [:new, :create]
 end

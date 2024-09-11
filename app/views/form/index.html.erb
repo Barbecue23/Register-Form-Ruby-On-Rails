@@ -1,20 +1,21 @@
 <div class="form-container">
-<h1>All User</h1>
+<h1>All Users</h1>
 
-<table>
-    <head>
-        <th>FirstName</th>
-        <th>LastName</th>
-        <th>Gender</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>subject</th>
-        <th>delete</th>
-    </head>
-
+<table id="users-table">
+    <thead>
+        <tr>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Gender</th>
+            <th class="sortable" data-sort="email">Email</th>
+            <th>Phone</th>
+            <th class="sortable" data-sort="subject">Subject</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
     <tbody>
     <% @forms.each do |form| %>
-        <div>
+        <tr>
             <td><%= form.firstname %></td>
             <td><%= form.lastname %></td>
             <td><%= form.gender %></td>
@@ -22,14 +23,117 @@
             <td><%= form.phonenumber %></td>
             <td><%= form.subject %></td>
             <td>
-            <%= button_to 'ลบ', "form/#{form.id}", method: :delete%>
+            <%= button_to 'ลบ', form_path(form), method: :delete, data: { turbo_frame: 'delete_modal', action: 'click->modal#open' }, class: 'delete-button' %>
             </td>
-        </div>
         </tr>
     <% end %>
     </tbody>
     </table>
-    <div class="botton_allList">
-    <%= link_to 'กลับหน้าลงทะเบียน', "form/new" %>
-    </div>
+
+  <div class="botton_allList">
+    <%= link_to 'กลับหน้าลงทะเบียน', 'form/new' %>
+  </div>
+
+  <!-- Render modal once -->
+  <%= render 'form/delete_modal' %>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM fully loaded and parsed');
+
+  const table = document.getElementById('users-table');
+  const deleteButtons = document.querySelectorAll('button.delete-button');
+  const modal = document.getElementById('deleteModal');
+  const confirmDeleteButton = document.getElementById('confirmDelete');
+  const cancelDeleteButton = document.getElementById('cancelDelete');
+  let urlToDelete = null;
+
+  if (!table) {
+    console.error('Table with id "users-table" not found');
+    return;
+  }
+  console.log('Table found:', table);
+
+  // Handle sorting logic
+  const headers = table.querySelectorAll('th.sortable');
+  let sortDirection = {};  // Store sorting direction for each column
+
+  headers.forEach(header => {
+    console.log('Adding click event to header:', header.textContent);
+    header.addEventListener('click', function() {
+      console.log('Header clicked:', this.textContent);
+      const column = this.dataset.sort;
+      if (column) {
+        sortDirection[column] = !sortDirection[column]; // Toggle sorting direction
+        sortTable(column, sortDirection[column]);
+      } else {
+        console.error('No sort data attribute found on header');
+      }
+    });
+  });
+
+  function sortTable(column, ascending) {
+    console.log('Sorting table by column:', column, ascending ? 'Ascending' : 'Descending');
+    const tableBody = table.querySelector('tbody');
+    const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+    const sortedRows = rows.sort((a, b) => {
+      const aColText = a.querySelector(`td:nth-child(${getColumnIndex(column) + 1})`).textContent.trim();
+      const bColText = b.querySelector(`td:nth-child(${getColumnIndex(column) + 1})`).textContent.trim();
+      return ascending ? aColText.localeCompare(bColText) : bColText.localeCompare(aColText);
+    });
+
+    tableBody.innerHTML = '';
+    sortedRows.forEach(row => tableBody.appendChild(row));
+  }
+
+  function getColumnIndex(column) {
+    return Array.from(table.querySelectorAll('th')).findIndex(header => header.dataset.sort === column);
+  }
+
+  // Modal logic for delete confirmation
+  deleteButtons.forEach(button => {
+    button.addEventListener('click', function(event) {
+      event.preventDefault(); // ป้องกันการกระทำค่าเริ่มต้น
+      urlToDelete = this.dataset.url; // เก็บ URL ที่จะลบ
+      modal.style.display = 'block'; // แสดง modal
+    });
+  });
+
+  // Confirm delete
+  confirmDeleteButton.addEventListener('click', function() {
+    if (urlToDelete) {
+      fetch(urlToDelete, {
+        method: 'DELETE',
+        headers: {
+          'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (!response.ok) {
+          location.reload(); // โหลดหน้าใหม่หลังจากลบสำเร็จ
+        } else {
+          console.error('Delete failed');
+        }
+      }).catch(error => console.error('Error:', error));
+      modal.style.display = 'none'; // ปิด modal
+    }
+  });
+
+  // Cancel delete
+  cancelDeleteButton.addEventListener('click', function() {
+    modal.style.display = 'none';  // Hide the modal
+    urlToDelete = null;  // Reset URL
+  });
+
+  // Close modal when clicking outside
+  window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+      urlToDelete = null;
+    }
+  });
+});
+
+</script>

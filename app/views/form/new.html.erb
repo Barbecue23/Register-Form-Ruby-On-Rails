@@ -9,19 +9,34 @@
     <div class="form-row">
         <div class="form-group">
             <%= f.label :firstname, "First Name" %>
-            <%= f.text_field :firstname, required: true %>
+            <%= f.text_field :firstname %>
+            <div class="error">
+            <% @form.errors.full_messages_for(:firstname).each do |message|  %>
+                <%= message %>
+            <% end %>
+            </div>
         </div>
 
         <div class="form-group">
             <%= f.label :lastname, "Last Name" %>
-            <%= f.text_field :lastname, required: true %>
+            <%= f.text_field :lastname %>
+            <div class="error">
+            <% @form.errors.full_messages_for(:lastname).each do |message|  %>
+                <%= message %>
+            <% end %>
+            </div>
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group">
             <%= f.label :birthdate %>
-            <%= f.date_field :birthdate, required: true %>
+            <%= f.date_field :birthdate %>
+            <div class="error">
+            <% @form.errors.full_messages_for(:birthdate).each do |message|  %>
+                <%= message %>
+            <% end %>
+            </div>
         </div>
 
         <div class="form-group">
@@ -30,29 +45,53 @@
                 <%= f.radio_button :gender, "male", checked: true %> Male
                 <%= f.radio_button :gender, "female" %> Female
             </div>
+            <div class="error">
+                <% @form.errors.full_messages_for(:gender).each do |message|  %>
+                    <%= message %>
+                <% end %>
+            </div>
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group">
             <%= f.label :email %>
-            <%= f.email_field :email, required: true %>
+            <%= f.email_field :email %>
+            <div class="error">
+            <% @form.errors.full_messages_for(:email).each do |message|  %>
+                <%= message %>
+            <% end %>
+            </div>
         </div>
         <div class="form-group">
             <%= f.label :phone, "Phone Number" %>
-            <%= f.telephone_field :phonenumber, required: true %>
+            <%= f.telephone_field :phonenumber %>
+            <div class="error">
+            <% @form.errors.full_messages_for(:phonenumber).each do |message|  %>
+                <%= message %>
+            <% end %>
+            </div>
         </div>
     </div>
 
     <div class="form-group">
         <%= f.label :subject %>
         <%= f.select :subject, options_for_select([["Choose option", ""], "HTML", "CSS", "JavaScript"]) %>
+        <div class="error">
+            <% @form.errors.full_messages_for(:subject).each do |message|  %>
+                <%= message%>
+            <% end %>
+        </div>
     </div>
 
-    <div class="link_to">
-    <%= f.submit "Submit", class: "submit-btn" %>
-    <%= link_to "Back to All User", root_path ,class: "all_user"%>
+    <div class="form-row">
+        <div class="form-group">
+            <%= f.submit "Submit", class: "submit-btn" %>
+        </div>
+
+        <div class="form-group">
+            <%= link_to "Back to All User", root_path ,class: "all_user"%>
+        </div>
     </div>
     <% end %>
-</div>
-
+</body>
