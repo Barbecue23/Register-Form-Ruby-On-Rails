@@ -4,8 +4,8 @@
     <table id="users-table">
         <thead>
             <tr>
-                <th><%= sort_link('FirstName', 'firstname') %></th>
-                <th><%= sort_link('LastName', 'lastname') %></th>
+                <th>Firstname</th>
+                <th>Lastname</th>
                 <th>Gender</th>
                 <th><%= sort_link('Email', 'email') %></th>
                 <th>Phone</th>
@@ -23,7 +23,7 @@
                 <td><%= form.phonenumber %></td>
                 <td><%= form.subject %></td>
                 <td>
-                <%= button_to 'ลบ', form_path(form), method: :get, data: { turbo_frame: 'modal' } %>
+                    <%= button_to 'ลบ', confirm_destroy_form_path(form), method: :get %>
                 </td>
             </tr>
         <% end %>
@@ -34,5 +34,5 @@
         <%= link_to 'กลับหน้าลงทะเบียน', new_form_path %>
     </div>
 
-    <%= turbo_frame_tag 'modal' %>
 </div>
+<%= turbo_frame_tag 'modal' %>

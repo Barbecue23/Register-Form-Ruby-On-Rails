@@ -12,15 +12,13 @@ class FormController < ApplicationController
   end
   def destroy
     @form = Form.find(params[:id])
-    if @form.destroy
-      redirect_to form_index_path
-    else
-      redirect_to form_index_path, alert: "Something went wrong"
-    end
-    def confirm_destroy
-      @form = Form.find(params[:id])
-      redirect_to confirm_destroy_form_path
-    end
+    @form.destroy
+    redirect_to root_path
+  end
+
+  def confirm_destroy
+    @form = Form.find(params[:id])
+    render turbo_stream: turbo_stream.replace("modal", partial: "confirm_destroy", locals: { kiw: @form })
   end
   def index
     @column = params[:sort_by]
