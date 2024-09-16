@@ -20,6 +20,10 @@ class FormController < ApplicationController
     @form = Form.find(params[:id])
     render turbo_stream: turbo_stream.replace("modal", partial: "confirm_destroy", locals: { kiw: @form })
   end
+  def new_modal
+    @form = Form.new
+    render turbo_stream: turbo_stream.replace("modal", partial: "new_modal", locals: { form: @form })
+  end
   def index
     @column = params[:sort_by]
     @direction = params[:direction]

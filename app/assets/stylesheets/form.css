@@ -226,18 +226,14 @@ th.sortable.desc::after {
   }
 
   .delete-button {
-    background-color: orangered;
-    color: white;
+    background: linear-gradient(45deg, #FFE9D0, #FFFED3, #BBE9FF, #B1AFFF);
+    color: rgb(255, 0, 0);
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-left: 10px;
     font-size: 16px;
-  }
-
-  .delete-button:hover {
-    background-color: orange;
   }
 
   .cancel-button {
