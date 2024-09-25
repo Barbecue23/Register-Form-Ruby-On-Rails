@@ -7,7 +7,11 @@ class FormController < ApplicationController
     if @form.save
       redirect_to root_path
     else
+      if request.referer&.include?("form/new")
       render :new , status: :unprocessable_entity
+      else
+        render turbo_stream: turbo_stream.replace("new_modal", partial: "new_modal", locals: { form: @form })
+      end
     end
   end
   def destroy
